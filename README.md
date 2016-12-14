@@ -1,2 +1,4 @@
 # AndroidSimpleScreenRTMP4
-Experiment Screencast by RTMP Project
+Sample Screencast by RTMP Project
+
+This project is required: https://github.com/lakeinchina/librestreaming
