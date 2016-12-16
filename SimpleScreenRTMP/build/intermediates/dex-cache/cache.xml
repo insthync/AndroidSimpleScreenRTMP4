@@ -43,17 +43,8 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="85caf0e8c0ccbf3ba7d0e906ae6a82fbd3c6b811">
+        sha1="d10da65cecfd5c67370a97995d579d5e4cd126ed">
         <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_fb9ea2910b017505e94556f71c7f54d2fdba9dcf/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_5cc546df762c72ce9a48f21075504ad411df6195/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -75,20 +66,11 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_f4b70a89933c2de4d026ecb1877968054d3da5c4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="9e50e7a7030b4533e1957aed9fce1686d0032400">
+        sha1="acb5ae6d7d879efbe730f29e9fd229008c783b53">
         <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_c95e36875d138dbd205972372f73249df24f18b2/classes.dex" />
     </item>
     <item
@@ -120,6 +102,33 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_a9ae0feaccad05157e188664e11623097ad21d80/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_5cc546df762c72ce9a48f21075504ad411df6195/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_f4b70a89933c2de4d026ecb1877968054d3da5c4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -135,15 +144,6 @@
         revision="24.0.2"
         sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
         <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_222138425d29bffc08b130d6e8c5909ab801f0a3/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_a9ae0feaccad05157e188664e11623097ad21d80/classes.dex" />
     </item>
     <item
         is-multidex="true"

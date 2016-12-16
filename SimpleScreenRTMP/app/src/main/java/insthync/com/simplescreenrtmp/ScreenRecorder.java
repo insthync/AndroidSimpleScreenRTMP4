@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import me.lake.librestreaming.core.MediaCodecHelper;
 import me.lake.librestreaming.core.Packager;
 import me.lake.librestreaming.model.RESCoreParameters;
 import me.lake.librestreaming.rtmp.RESFlvData;
@@ -24,16 +25,9 @@ import me.lake.librestreaming.tools.LogTools;
 public class ScreenRecorder extends Thread {
     private static final String TAG = "ScreenRecorder";
 
-    private int mWidth;
-    private int mHeight;
-    private int mBitRate;
     private int mDpi;
     private MediaProjection mMediaProjection;
-    // parameters for the encoder
-    private static final String MIME_TYPE = MediaFormat.MIMETYPE_VIDEO_AVC; // H.264 Advanced Video Coding
-    private static final int FRAME_RATE = 30; // 30 fps
-    private static final int IFRAME_INTERVAL = 5; // 10 seconds between I-frames
-
+    private RESCoreParameters mCoreParameters;
     private MediaCodec mEncoder;
     private Surface mSurface;
     private AtomicBoolean mQuit = new AtomicBoolean(false);
@@ -41,18 +35,14 @@ public class ScreenRecorder extends Thread {
     private VirtualDisplay mVirtualDisplay;
     // Send data to server
     private static final long WAIT_TIME = 5000;
-    private MediaCodec.BufferInfo eInfo;
     private long startTime = 0;
     private RESFlvDataCollecter dataCollecter;
 
     public ScreenRecorder(RESCoreParameters coreParameters, int dpi, MediaProjection mp, RESFlvDataCollecter flvDataCollecter) {
         super(TAG);
-        mWidth = coreParameters.videoWidth;
-        mHeight = coreParameters.videoHeight;
-        mBitRate = coreParameters.mediacdoecAVCBitRate;
         mDpi = dpi;
         mMediaProjection = mp;
-        eInfo = new MediaCodec.BufferInfo();
+        mCoreParameters = coreParameters;
         startTime = 0;
         dataCollecter = flvDataCollecter;
     }
@@ -74,7 +64,7 @@ public class ScreenRecorder extends Thread {
             }
 
             mVirtualDisplay = mMediaProjection.createVirtualDisplay(TAG + "-display",
-                    mWidth, mHeight, mDpi, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
+                    mCoreParameters.videoWidth, mCoreParameters.videoHeight, mDpi, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
                     mSurface, null, null);
             Log.d(TAG, "created virtual display: " + mVirtualDisplay);
             recordVirtualDisplay();
@@ -87,7 +77,7 @@ public class ScreenRecorder extends Thread {
         while (!mQuit.get()) {
             int eobIndex = MediaCodec.INFO_TRY_AGAIN_LATER;
             try {
-                eobIndex = mEncoder.dequeueOutputBuffer(eInfo, WAIT_TIME);
+                eobIndex = mEncoder.dequeueOutputBuffer(mBufferInfo, WAIT_TIME);
             } catch (Exception ignored) {
             }
             switch (eobIndex) {
@@ -105,17 +95,17 @@ public class ScreenRecorder extends Thread {
                 default:
                     LogTools.d("VideoSenderThread,MediaCode,eobIndex=" + eobIndex);
                     if (startTime == 0) {
-                        startTime = eInfo.presentationTimeUs / 1000;
+                        startTime = mBufferInfo.presentationTimeUs / 1000;
                     }
                     /**
                      * we send sps pps already in INFO_OUTPUT_FORMAT_CHANGED
                      * so we ignore MediaCodec.BUFFER_FLAG_CODEC_CONFIG
                      */
-                    if (eInfo.flags != MediaCodec.BUFFER_FLAG_CODEC_CONFIG && eInfo.size != 0) {
+                    if (mBufferInfo.flags != MediaCodec.BUFFER_FLAG_CODEC_CONFIG && mBufferInfo.size != 0) {
                         ByteBuffer realData = mEncoder.getOutputBuffer(eobIndex);
-                        realData.position(eInfo.offset + 4);
-                        realData.limit(eInfo.offset + eInfo.size);
-                        sendRealData((eInfo.presentationTimeUs / 1000) - startTime, realData);
+                        realData.position(mBufferInfo.offset + 4);
+                        realData.limit(mBufferInfo.offset + mBufferInfo.size);
+                        sendRealData((mBufferInfo.presentationTimeUs / 1000) - startTime, realData);
                     }
                     mEncoder.releaseOutputBuffer(eobIndex, false);
                     break;
@@ -124,15 +114,8 @@ public class ScreenRecorder extends Thread {
     }
 
     private void prepareEncoder() throws IOException {
-
-        MediaFormat format = MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
-        format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
-        format.setInteger(MediaFormat.KEY_BIT_RATE, mBitRate);
-        format.setInteger(MediaFormat.KEY_FRAME_RATE, FRAME_RATE);
-        format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, IFRAME_INTERVAL);
-
-        Log.d(TAG, "created video format: " + format);
-        mEncoder = MediaCodec.createEncoderByType(MIME_TYPE);
+        MediaFormat format = new MediaFormat();
+        mEncoder = MediaCodecHelper.createHardVideoMediaCodec(mCoreParameters, format);
         mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
         mSurface = mEncoder.createInputSurface();
         Log.d(TAG, "created input surface: " + mSurface);

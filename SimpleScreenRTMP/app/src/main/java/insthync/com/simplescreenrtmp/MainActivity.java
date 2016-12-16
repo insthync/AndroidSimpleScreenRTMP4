@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     // RTMP Constraints
-    private static final String DEFAULT_RMTP_HOST = "192.168.1.78";
+    private static final String DEFAULT_RMTP_HOST = "192.168.1.45";
     private static final int DEFAULT_RTMP_PORT = 1935;
     private static final String DEFAULT_APP_NAME = "live";
     private static final String DEFAULT_PUBLISH_NAME = "test";
@@ -148,6 +148,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             coreParameters.videoWidth = width;
             coreParameters.videoHeight = height;
             coreParameters.mediacdoecAVCBitRate = bitrate;
+            coreParameters.mediacodecAVCIFrameInterval = 3;
+            coreParameters.mediacodecAVCFrameRate = 25;
             // Audio setup
             audioClient = new RESAudioClient(coreParameters);
             audioClient.prepare(RESConfig.obtain());
