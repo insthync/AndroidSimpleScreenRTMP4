@@ -43,7 +43,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="d10da65cecfd5c67370a97995d579d5e4cd126ed">
+        sha1="2056dc34cf1c49efd83f95f9abaa142be382a46d">
         <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_fb9ea2910b017505e94556f71c7f54d2fdba9dcf/classes.dex" />
     </item>
     <item
@@ -70,7 +70,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="acb5ae6d7d879efbe730f29e9fd229008c783b53">
+        sha1="a89f97993391138965b66a2e593c5b9787c2b070">
         <dex dex="/Users/ittipon/Desktop/example/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_c95e36875d138dbd205972372f73249df24f18b2/classes.dex" />
     </item>
     <item

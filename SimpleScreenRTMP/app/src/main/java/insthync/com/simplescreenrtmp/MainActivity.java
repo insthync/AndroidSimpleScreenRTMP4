@@ -140,16 +140,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
             getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
             // video size
-            final int width = displaymetrics.widthPixels / 3;
-            final int height = displaymetrics.heightPixels / 3;
+            final int width = 640;
+            final int height = 480;
             final int bitrate = 600000;
             // Video setup
             coreParameters.rtmpAddr = rmptAddress;
             coreParameters.videoWidth = width;
             coreParameters.videoHeight = height;
             coreParameters.mediacdoecAVCBitRate = bitrate;
-            coreParameters.mediacodecAVCIFrameInterval = 3;
-            coreParameters.mediacodecAVCFrameRate = 25;
+            coreParameters.mediacodecAVCIFrameInterval = 10;
+            coreParameters.mediacodecAVCFrameRate = 15;
             // Audio setup
             audioClient = new RESAudioClient(coreParameters);
             audioClient.prepare(RESConfig.obtain());

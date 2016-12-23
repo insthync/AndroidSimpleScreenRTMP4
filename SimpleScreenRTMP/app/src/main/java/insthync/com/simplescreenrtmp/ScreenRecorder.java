@@ -34,9 +34,11 @@ public class ScreenRecorder extends Thread {
     private MediaCodec.BufferInfo mBufferInfo = new MediaCodec.BufferInfo();
     private VirtualDisplay mVirtualDisplay;
     // Send data to server
-    private static final long WAIT_TIME = 5000;
+    private static final long WAIT_TIME = 1000000000;
     private long startTime = 0;
     private RESFlvDataCollecter dataCollecter;
+    private int lastRealBufferLength;
+    private byte[] lastBufferData;
 
     public ScreenRecorder(RESCoreParameters coreParameters, int dpi, MediaProjection mp, RESFlvDataCollecter flvDataCollecter) {
         super(TAG);
@@ -76,8 +78,11 @@ public class ScreenRecorder extends Thread {
     private void recordVirtualDisplay() {
         while (!mQuit.get()) {
             int eobIndex = MediaCodec.INFO_TRY_AGAIN_LATER;
+            LogTools.d("updating");
             try {
+                LogTools.d("dequeueOutputBuffer");
                 eobIndex = mEncoder.dequeueOutputBuffer(mBufferInfo, WAIT_TIME);
+                LogTools.d("dequeueOutputBuffer Done");
             } catch (Exception ignored) {
             }
             switch (eobIndex) {
@@ -85,15 +90,14 @@ public class ScreenRecorder extends Thread {
                     LogTools.d("VideoSenderThread,MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED");
                     break;
                 case MediaCodec.INFO_TRY_AGAIN_LATER:
-//                        LogTools.d("VideoSenderThread,MediaCodec.INFO_TRY_AGAIN_LATER");
+                    LogTools.d("VideoSenderThread,MediaCodec.INFO_TRY_AGAIN_LATER");
+                    sendLastBuffer();
                     break;
                 case MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:
-                    LogTools.d("VideoSenderThread,MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:" +
-                            mEncoder.getOutputFormat().toString());
+                    LogTools.d("VideoSenderThread,MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:" + mEncoder.getOutputFormat().toString());
                     sendAVCDecoderConfigurationRecord(0, mEncoder.getOutputFormat());
                     break;
                 default:
-                    LogTools.d("VideoSenderThread,MediaCode,eobIndex=" + eobIndex);
                     if (startTime == 0) {
                         startTime = mBufferInfo.presentationTimeUs / 1000;
                     }
@@ -101,15 +105,25 @@ public class ScreenRecorder extends Thread {
                      * we send sps pps already in INFO_OUTPUT_FORMAT_CHANGED
                      * so we ignore MediaCodec.BUFFER_FLAG_CODEC_CONFIG
                      */
-                    if (mBufferInfo.flags != MediaCodec.BUFFER_FLAG_CODEC_CONFIG && mBufferInfo.size != 0) {
-                        ByteBuffer realData = mEncoder.getOutputBuffer(eobIndex);
-                        realData.position(mBufferInfo.offset + 4);
-                        realData.limit(mBufferInfo.offset + mBufferInfo.size);
-                        sendRealData((mBufferInfo.presentationTimeUs / 1000) - startTime, realData);
+                    if (mBufferInfo.flags != MediaCodec.BUFFER_FLAG_CODEC_CONFIG) {
+                        if (mBufferInfo.size != 0) {
+                            ByteBuffer realData = mEncoder.getOutputBuffer(eobIndex);
+                            realData.position(mBufferInfo.offset + 4);
+                            realData.limit(mBufferInfo.offset + mBufferInfo.size);
+                            sendRealData((mBufferInfo.presentationTimeUs / 1000) - startTime, realData);
+                        } else {
+                            sendLastBuffer();
+                        }
                     }
                     mEncoder.releaseOutputBuffer(eobIndex, false);
                     break;
             }
+        }
+    }
+
+    private void sendLastBuffer() {
+        if (startTime > 0 && lastRealBufferLength > 0 && lastBufferData != null) {
+            sendRealData((mBufferInfo.presentationTimeUs / 1000) - startTime, lastRealBufferLength, lastBufferData);
         }
     }
 
@@ -118,7 +132,6 @@ public class ScreenRecorder extends Thread {
         mEncoder = MediaCodecHelper.createHardVideoMediaCodec(mCoreParameters, format);
         mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
         mSurface = mEncoder.createInputSurface();
-        Log.d(TAG, "created input surface: " + mSurface);
         mEncoder.start();
     }
 
@@ -169,6 +182,14 @@ public class ScreenRecorder extends Thread {
         realData.get(finalBuff, Packager.FLVPackager.FLV_VIDEO_TAG_LENGTH +
                         Packager.FLVPackager.NALU_HEADER_LENGTH,
                 realDataLength);
+
+        lastRealBufferLength = realDataLength;
+        lastBufferData = finalBuff;
+        sendRealData(tms, realDataLength, finalBuff);
+    }
+
+    private void sendRealData(long tms, int realDataLength, byte[] finalBuff)
+    {
         int frameType = finalBuff[Packager.FLVPackager.FLV_VIDEO_TAG_LENGTH +
                 Packager.FLVPackager.NALU_HEADER_LENGTH] & 0x1F;
         Packager.FLVPackager.fillFlvVideoTag(finalBuff,
