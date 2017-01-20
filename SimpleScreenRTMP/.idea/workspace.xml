@@ -29,21 +29,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/insthync/com/simplescreenrtmp/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-240">
-              <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+            <state relative-caret-position="2475">
+              <caret line="191" column="39" selection-start-line="191" selection-start-column="39" selection-end-line="191" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScreenRecorder.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ScreenRecorder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/insthync/com/simplescreenrtmp/ScreenRecorder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="117" column="116" selection-start-line="117" selection-start-column="116" selection-end-line="117" selection-end-column="116" />
+            <state relative-caret-position="394">
+              <caret line="117" column="66" selection-start-line="117" selection-start-column="35" selection-end-line="117" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -3990,18 +3990,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/insthync/com/simplescreenrtmp/ScreenRecorder.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/insthync/com/simplescreenrtmp/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="117" column="116" selection-start-line="117" selection-start-column="116" selection-end-line="117" selection-end-column="116" />
+        <state relative-caret-position="2475">
+          <caret line="191" column="39" selection-start-line="191" selection-start-column="39" selection-end-line="191" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/insthync/com/simplescreenrtmp/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/insthync/com/simplescreenrtmp/ScreenRecorder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-240">
-          <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+        <state relative-caret-position="394">
+          <caret line="117" column="66" selection-start-line="117" selection-start-column="35" selection-end-line="117" selection-end-column="66" />
           <folding />
         </state>
       </provider>

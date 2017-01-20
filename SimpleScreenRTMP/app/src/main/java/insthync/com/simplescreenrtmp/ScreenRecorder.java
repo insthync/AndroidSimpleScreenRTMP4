@@ -37,8 +37,6 @@ public class ScreenRecorder extends Thread {
     private static final long WAIT_TIME = 1000000000;
     private long startTime = 0;
     private RESFlvDataCollecter dataCollecter;
-    private int lastRealBufferLength;
-    private byte[] lastBufferData;
 
     public ScreenRecorder(RESCoreParameters coreParameters, int dpi, MediaProjection mp, RESFlvDataCollecter flvDataCollecter) {
         super(TAG);
@@ -78,11 +76,8 @@ public class ScreenRecorder extends Thread {
     private void recordVirtualDisplay() {
         while (!mQuit.get()) {
             int eobIndex = MediaCodec.INFO_TRY_AGAIN_LATER;
-            LogTools.d("updating");
             try {
-                LogTools.d("dequeueOutputBuffer");
                 eobIndex = mEncoder.dequeueOutputBuffer(mBufferInfo, WAIT_TIME);
-                LogTools.d("dequeueOutputBuffer Done");
             } catch (Exception ignored) {
             }
             switch (eobIndex) {
@@ -91,7 +86,6 @@ public class ScreenRecorder extends Thread {
                     break;
                 case MediaCodec.INFO_TRY_AGAIN_LATER:
                     LogTools.d("VideoSenderThread,MediaCodec.INFO_TRY_AGAIN_LATER");
-                    sendLastBuffer();
                     break;
                 case MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:
                     LogTools.d("VideoSenderThread,MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:" + mEncoder.getOutputFormat().toString());
@@ -111,8 +105,6 @@ public class ScreenRecorder extends Thread {
                             realData.position(mBufferInfo.offset + 4);
                             realData.limit(mBufferInfo.offset + mBufferInfo.size);
                             sendRealData((mBufferInfo.presentationTimeUs / 1000) - startTime, realData);
-                        } else {
-                            sendLastBuffer();
                         }
                     }
                     mEncoder.releaseOutputBuffer(eobIndex, false);
@@ -121,14 +113,9 @@ public class ScreenRecorder extends Thread {
         }
     }
 
-    private void sendLastBuffer() {
-        if (startTime > 0 && lastRealBufferLength > 0 && lastBufferData != null) {
-            sendRealData((mBufferInfo.presentationTimeUs / 1000) - startTime, lastRealBufferLength, lastBufferData);
-        }
-    }
-
     private void prepareEncoder() throws IOException {
         MediaFormat format = new MediaFormat();
+        format.setLong(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / mCoreParameters.mediacodecAVCFrameRate);
         mEncoder = MediaCodecHelper.createHardVideoMediaCodec(mCoreParameters, format);
         mEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
         mSurface = mEncoder.createInputSurface();
@@ -183,8 +170,6 @@ public class ScreenRecorder extends Thread {
                         Packager.FLVPackager.NALU_HEADER_LENGTH,
                 realDataLength);
 
-        lastRealBufferLength = realDataLength;
-        lastBufferData = finalBuff;
         sendRealData(tms, realDataLength, finalBuff);
     }
 
