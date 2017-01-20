@@ -34,7 +34,7 @@ public class ScreenRecorder extends Thread {
     private MediaCodec.BufferInfo mBufferInfo = new MediaCodec.BufferInfo();
     private VirtualDisplay mVirtualDisplay;
     // Send data to server
-    private static final long WAIT_TIME = 1000000000;
+    private static final long WAIT_TIME = 10000;
     private long startTime = 0;
     private RESFlvDataCollecter dataCollecter;
 
