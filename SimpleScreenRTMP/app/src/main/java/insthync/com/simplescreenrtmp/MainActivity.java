@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     // RTMP Constraints
-    private static final String DEFAULT_RMTP_HOST = "192.168.1.45";
+    private static final String DEFAULT_RMTP_HOST = "188.166.191.129";
     private static final int DEFAULT_RTMP_PORT = 1935;
     private static final String DEFAULT_APP_NAME = "live";
     private static final String DEFAULT_PUBLISH_NAME = "test";

@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="a14d95c2cf848e45d95261cb96e6f371d8449e7a">
+        sha1="2047d222a447671df5737da787cb8584d05a723c">
         <dex dex="/Users/zlocaladmin/Desktop/OpenSources/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_2457d39936d8930e9b069cb0856d7b6e34c5de72/classes.dex" />
     </item>
     <item
@@ -178,7 +178,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="4d28b551c551db1bf861839adc0265be4465c61a">
+        sha1="3add44e4b07ee16983fdfbd7d41dd52b5a647bda">
         <dex dex="/Users/zlocaladmin/Desktop/OpenSources/AndroidSimpleScreenRTMP4/SimpleScreenRTMP/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_39fac2a681a0796638cfe57134400b1e5bc0ef56/classes.dex" />
     </item>
     <item

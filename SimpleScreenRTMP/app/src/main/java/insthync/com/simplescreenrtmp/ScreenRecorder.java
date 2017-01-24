@@ -64,7 +64,7 @@ public class ScreenRecorder extends Thread {
             }
 
             mVirtualDisplay = mMediaProjection.createVirtualDisplay(TAG + "-display",
-                    mCoreParameters.videoWidth, mCoreParameters.videoHeight, mDpi, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
+                    mCoreParameters.videoWidth, mCoreParameters.videoHeight, mDpi, 0,
                     mSurface, null, null);
             Log.d(TAG, "created virtual display: " + mVirtualDisplay);
             recordVirtualDisplay();
