@@ -78,32 +78,32 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void verifyPermissions() {
-        int CAMERA_permission = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
-        int RECORD_AUDIO_permission = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO);
-        int WRITE_EXTERNAL_STORAGE_permission = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (CAMERA_permission != PackageManager.PERMISSION_GRANTED ||
-                RECORD_AUDIO_permission != PackageManager.PERMISSION_GRANTED ||
-                WRITE_EXTERNAL_STORAGE_permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    PERMISSIONS_STREAM,
-                    REQUEST_STREAM
-            );
-            authorized = false;
-        } else {
-            authorized = true;
+        for (String permission : PERMISSIONS_STREAM) {
+            int permissionResult = ActivityCompat.checkSelfPermission(MainActivity.this, permission);
+            if (permissionResult != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        PERMISSIONS_STREAM,
+                        REQUEST_STREAM
+                );
+                authorized = false;
+                return;
+            }
         }
+        authorized = true;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_STREAM) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[1] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[2] == PackageManager.PERMISSION_GRANTED) {
-                authorized = true;
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    authorized = false;
+                    return;
+                }
             }
+            authorized = true;
         }
     }
 
